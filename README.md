@@ -25,6 +25,10 @@ Si le domaine Vercel affiche une page `404`, vérifier en priorité ces points :
 5. **Variables d’environnement** : renseigner au minimum les variables listées dans `.env.example` pour que les formulaires fonctionnent en production.
    - La page peut s’afficher sans clé Resend, mais les formulaires échoueront tant que `RESEND_API_KEY`, `RESEND_FROM` et `CONTACT_TO` ne sont pas configurés.
 
+6. **Erreur 403 pendant `npm run build`** : ce projet n’utilise pas `next/font/google`, car ce module télécharge les polices Google au moment du build et peut provoquer une erreur `403 Forbidden` selon l’environnement réseau.
+   - Les polices sont chargées via des balises `<link>` runtime dans `app/layout.tsx`, ce qui évite un échec de build lié aux polices.
+   - Si le 403 apparaît pendant l’installation npm, le fichier `.npmrc` force le registre public npm ; vérifier aussi qu’aucune variable Vercel ne force un registre privé nécessitant une authentification.
+
 ## Variables d’environnement
 
 ```bash
