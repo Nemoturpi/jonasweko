@@ -25,9 +25,10 @@ Si le domaine Vercel affiche une page `404`, vérifier en priorité ces points :
 5. **Variables d’environnement** : renseigner au minimum les variables listées dans `.env.example` pour que les formulaires fonctionnent en production.
    - La page peut s’afficher sans clé Resend, mais les formulaires échoueront tant que `RESEND_API_KEY`, `RESEND_FROM` et `CONTACT_TO` ne sont pas configurés.
 
-6. **Erreur 403 pendant `npm run build`** : ce projet n’utilise pas `next/font/google`, car ce module télécharge les polices Google au moment du build et peut provoquer une erreur `403 Forbidden` selon l’environnement réseau.
-   - Les polices sont chargées via des balises `<link>` runtime dans `app/layout.tsx`, ce qui évite un échec de build lié aux polices.
-   - Si le 403 apparaît pendant l’installation npm, le fichier `.npmrc` force le registre public npm ; vérifier aussi qu’aucune variable Vercel ne force un registre privé nécessitant une authentification.
+6. **Erreur 403 sur `registry.npmjs.org`** : si les logs indiquent `403 Forbidden - GET https://registry.npmjs.org/...`, ce n’est pas une erreur Next.js, Resend ou landing page.
+   - Le fichier `.npmrc` force déjà le registre public npm.
+   - Vérifier que l’environnement d’exécution n’injecte pas de proxy npm (`npm_config_http_proxy`, `npm_config_https_proxy`, `HTTP_PROXY`, `HTTPS_PROXY`) qui bloque l’accès au registre.
+   - Dans un environnement sandbox/proxy qui bloque npm, relancer `npm install` puis `npm run build` en local, sur GitHub Actions ou directement sur Vercel.
 
 ## Variables d’environnement
 

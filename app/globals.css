@@ -3,8 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --font-cormorant: "Cormorant Garamond", Georgia, serif;
-  --font-dm-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   color-scheme: dark;
   background: #0a0f1e;
 }

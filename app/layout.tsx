@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
+
+const cormorant = Cormorant_Garamond({ subsets: ["latin"], variable: "--font-cormorant", display: "swap" });
+const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Jonas Weko — Risque politique et monétaire en Afrique de l’Ouest",
@@ -12,15 +16,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 
   return (
-    <html lang="fr">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="fr" className={`${cormorant.variable} ${dmSans.variable}`}>
       <body className="font-sans antialiased">
         {plausibleDomain ? (
           <Script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js" strategy="afterInteractive" />
