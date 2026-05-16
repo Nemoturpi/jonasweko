@@ -1,41 +1,339 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jonas Weko — Conseil indépendant · Afrique de l'Ouest</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  html, body { margin: 0; padding: 0; background: #fafaf6; font-family: 'DM Sans', system-ui, sans-serif; }
-  *, *::before, *::after { box-sizing: border-box; }
-  ::selection { background: rgba(212,185,107,0.4); color: #0d2849; }
-  input, select, textarea { font-family: inherit; }
-</style>
-</head>
-<body>
-<div id="root"></div>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jonas Weko — Conseil indépendant · Afrique de l'Ouest</title>
+  <meta name="description" content="Analyse de risque politique et monétaire pour investisseurs, banques et institutions exposées à la zone franc, à l'Eco et aux dynamiques de l'AES.">
+  //fonts.googleapis.com">
+  //fonts.gstatic.com" crossorigin>
+  //fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    /* ─── RESET & TOKENS ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #0d2849;
+      --navy2:  #103056;
+      --deep:   #0a1f3a;
+      --gold:   #d4b96b;
+      --gold2:  #c9a84c;
+      --bg:     #fafaf6;
+      --panel:  #e8ebec;
+      --ink:    #0d2849;
+      --muted:  rgba(13,40,73,.72);
+      --subtle: rgba(13,40,73,.55);
+      --bare:   rgba(13,40,73,.28);
+      --ff-serif: 'Cormorant Garamond', Georgia, serif;
+      --ff-sans:  'DM Sans', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--ff-sans); font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: rgba(212,185,107,.35); color: var(--navy); }
 
-<script type="text/babel" src="map.jsx"></script>
-<script type="text/babel" src="shared.jsx"></script>
-<script type="text/babel" src="direction-2.jsx"></script>
+    /* ─── UTILITIES ─── */
+    .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+    .container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 40px; }
+    .gold { color: var(--gold); }
+    [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .7s ease, transform .7s ease; }
+    [data-reveal].visible { opacity: 1; transform: translateY(0); }
 
-<script type="text/babel">
-// Standalone palette — matches Tweaks default in index.html
-const PALETTE = { base: '#0d2849', elev: '#103056', deep: '#0a1f3a' };
-const ACCENT = '#d4b96b';
+    /* ─── TOPBAR ─── */
+    .topbar {
+      background: var(--navy);
+      color: rgba(255,255,255,.55);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 8px 0;
+      text-align: right;
+    }
+    .topbar a { color: rgba(255,255,255,.55); margin-left: 20px; transition: color .2s; }
+    .topbar a:hover, .topbar a.active { color: var(--gold); }
 
-function App() {
-  return <Direction2 accent={ACCENT} density="compact" palette={PALETTE} />;
-}
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--bare);
+      backdrop-filter: blur(6px);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-mark {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-mark svg { width: 22px; height: 22px; }
+    .logo-name { font-family: var(--ff-serif); font-size: 18px; font-weight: 600; letter-spacing: .03em; line-height: 1.1; }
+    .logo-name span { display: block; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 12.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: 9px 22px;
+      border-radius: 999px;
+      transition: all .2s;
+      cursor: pointer;
+    }
+    .nav-cta:hover { background: var(--gold); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
-</script>
-</body>
-</html>
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 100px 0 90px;
+      background: var(--bg);
+    }
+    .hero-float {
+      position: absolute;
+      width: 14px; height: 14px;
+      background: var(--gold);
+      opacity: .35;
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    h1 {
+      font-family: var(--ff-serif);
+      font-size: clamp(34px, 4.5vw, 52px);
+      font-weight: 500;
+      line-height: 1.15;
+      color: var(--navy);
+      margin-bottom: 24px;
+    }
+    h1 em { font-style: italic; color: var(--gold2); }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--navy); color: #fff;
+      font-size: 13px; font-weight: 600; letter-spacing: .04em;
+      padding: 14px 28px; border-radius: 999px;
+      border: 1.5px solid var(--navy);
+      transition: all .2s;
+    }
+    .btn-primary:hover { background: var(--navy2); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: var(--navy);
+      font-size: 13px; font-weight: 600; letter-spacing: .04em;
+      padding: 14px 28px; border-radius: 999px;
+      border: 1.5px solid var(--gold);
+      transition: all .2s;
+    }
+    .btn-ghost:hover { background: var(--gold); }
+
+    /* ─── HERO ILLUSTRATION ─── */
+    .hero-visual {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .africa-scene {
+      width: 100%; max-width: 480px;
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+    .africa-scene svg { width: 100%; height: 100%; }
+
+    /* ─── AFFILIATIONS STRIP ─── */
+    .affiliations {
+      background: var(--panel);
+      border-top: 1px solid var(--bare);
+      border-bottom: 1px solid var(--bare);
+      padding: 20px 0;
+    }
+    .aff-inner {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .aff-label {
+      font-size: 10px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--subtle);
+      white-space: nowrap;
+    }
+    .aff-badges {
+      display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
+    }
+    .aff-badge {
+      font-size: 12px; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 5px 14px;
+      border: 1px solid var(--bare);
+      border-radius: 2px;
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-kicker {
+      font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-family: var(--ff-serif);
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .section-intro {
+      font-size: 15px; color: var(--muted); line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ─── § I CONSTAT ─── */
+    .constat {
+      padding: 0;
+    }
+    .constat-banner {
+      background: var(--navy);
+      padding: 60px 0 50px;
+    }
+    .constat-banner .section-kicker { color: rgba(255,255,255,.4); }
+    .constat-banner h2 { color: #fff; margin-bottom: 40px; }
+    .constat-blocks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,.1);
+    }
+    .constat-block {
+      background: var(--navy);
+      padding: 36px 32px 32px;
+      position: relative;
+    }
+    .constat-block::before {
+      content: attr(data-num);
+      display: block;
+      font-family: var(--ff-serif);
+      font-size: 48px;
+      font-weight: 400;
+      color: rgba(212,185,107,.2);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .constat-block p {
+      font-size: 14.5px;
+      color: rgba(255,255,255,.72);
+      line-height: 1.7;
+    }
+
+    /* ─── § II EXPERTISE ─── */
+    .expertise { padding: 90px 0; }
+    .expertise-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .portrait-wrap {
+      position: relative;
+    }
+    .portrait-frame {
+      position: absolute;
+      top: -12px; left: -12px;
+      right: 12px; bottom: 12px;
+      border: 1.5px solid var(--gold);
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .portrait-img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--navy2);
+      border-radius: 3px;
+      overflow: hidden;
+      display: flex; align-items: flex-end;
+    }
+    .portrait-img img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+    }
+    .portrait-img .portrait-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(160deg, var(--navy2) 0%, var(--deep) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px;
+    }
+    .portrait-img .portrait-placeholder svg {
+      width: 72px; height: 72px; opacity: .3;
+    }
+    .portrait-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      background: var(--navy);
+      padding: 14px 18px;
+    }
+    .portrait-caption .pc-name {
+      font-family: var(--ff-serif);
+      font-size: 16px; font-weight: 600;
+      color: #fff; line-height: 1.1;
+    }
+    .portrait-caption .pc-title {
+      font-size: 10px; font-weight: 700; letter-spacing: .09em;
+      text-transform: uppercase; color: var(--gold);
+      margin-top: 3px;
+    }
+
+    .expertise-content { padding-top: 8px; }
+    .expertise-content h2 { margin-bottom: 24px; }
+    .cred-list { list-style: none; margin: 0 0 28px; }
+    .cred-list li {
+      font-size: 14px; color: var(--muted); line-height: 1.6;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--bare);
+      display: flex; align-items: baseline; gap: 10px;
+    }
+    .cred-list li::before {
+      content: '—';
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .thesis-block {
+      background: var(--panel);
+      border-left: 3px solid
