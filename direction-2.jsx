@@ -179,39 +179,69 @@ function Direction2({ accent = '#d4b96b', density = 'compact', palette = { base:
       <section
         style={{
           position: 'relative',
-          padding: `${py}px ${px}px`,
-          paddingBottom: compact ? 100 : 140,
+          padding: `0 ${px}px ${compact ? 76 : 110}px`,
           overflow: 'hidden',
+          background: `linear-gradient(180deg, ${bg} 0%, ${bg} 18%, ${navy} 18%, ${navy} 100%)`,
         }}
       >
         {/* Floating decorative squares — ADIT signature */}
-        <FloatSquare color={gold} size={14} top={60} left={px + 100} />
-        <FloatSquare color={gold} size={10} bottom={120} left={140} />
-        <FloatSquare color={navy} size={12} top={180} right={px + 60} />
-        <FloatSquare color={gold} size={16} bottom={80} right={px + 200} />
+        <FloatSquare color={gold} size={14} top={50} left={px + 70} />
+        <FloatSquare color={gold} size={10} bottom={86} left={px + 32} />
+        <FloatSquare color={navy} size={12} top={110} right={px + 32} />
+        <FloatSquare color={gold} size={16} bottom={52} right={px + 210} />
 
-        {/* Diagonal dashed connectors */}
-        <svg aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', width: '100%', height: '100%' }}>
-          <line x1="0" y1="20%" x2="20%" y2="35%" stroke={hexToRgba(navy, 0.25)} strokeWidth="0.6" strokeDasharray="2 5" />
-          <line x1="100%" y1="65%" x2="80%" y2="85%" stroke={hexToRgba(navy, 0.25)} strokeWidth="0.6" strokeDasharray="2 5" />
-        </svg>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 60, alignItems: 'center', position: 'relative' }}>
-          {/* LEFT — editorial Africa scene */}
-          <div data-reveal style={{ position: 'relative' }}>
-            <AfricaScene navy={navy} gold={gold} style={{ width: '100%', maxWidth: 720 }} />
-            <FloatSquare color={navy} size={9} bottom={-8} left={40} />
-            <FloatSquare color={gold} size={9} top={-12} right={120} />
-          </div>
-
-          {/* RIGHT — H1 + sub */}
-          <div data-reveal>
+        <div
+          data-reveal
+          style={{
+            position: 'relative',
+            maxWidth: 1320,
+            marginInline: 'auto',
+            minHeight: compact ? 620 : 720,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 520px), 1fr))',
+            alignItems: 'stretch',
+            boxShadow: `0 34px 80px ${hexToRgba(navy, 0.22)}`,
+            isolation: 'isolate',
+          }}
+        >
+          {/* LEFT — editorial statement panel */}
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 2,
+              padding: compact ? '64px 54px' : '84px 72px',
+              background: `linear-gradient(135deg, ${navy} 0%, ${palette.deep} 100%)`,
+              color: '#fff',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              overflow: 'hidden',
+            }}
+          >
+            <DashedConnector
+              from={{ x: 0, y: 18 }}
+              to={{ x: 100, y: 78 }}
+              color={hexToRgba('#ffffff', 0.2)}
+            />
+            <FloatSquare color={gold} size={11} top={34} right={34} />
+            <FloatSquare color={hexToRgba('#ffffff', 0.16)} size={9} bottom={42} left={38} />
+            <div
+              style={{
+                fontSize: 11,
+                letterSpacing: '0.28em',
+                color: gold,
+                fontWeight: 600,
+                marginBottom: 26,
+              }}
+            >
+              ANALYSE INDÉPENDANTE
+            </div>
             <h1
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: compact ? 64 : 84,
+                fontSize: compact ? 62 : 82,
                 fontWeight: 600,
-                lineHeight: 0.98,
+                lineHeight: 0.95,
                 letterSpacing: '0.005em',
                 margin: 0,
                 color: gold,
@@ -230,11 +260,11 @@ function Direction2({ accent = '#d4b96b', density = 'compact', palette = { base:
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: compact ? 17 : 19,
                 lineHeight: 1.5,
-                color: navy,
+                color: 'rgba(255,255,255,0.92)',
                 fontWeight: 500,
                 marginTop: 32,
                 marginBottom: 0,
-                maxWidth: 480,
+                maxWidth: 500,
               }}
             >
               Comprendre les systèmes <K color={gold}>monétaires</K> et <K color={gold}>politiques</K> d’Afrique de l’Ouest — pour décider.
@@ -242,11 +272,11 @@ function Direction2({ accent = '#d4b96b', density = 'compact', palette = { base:
             <p
               style={{
                 fontSize: 14.5,
-                lineHeight: 1.6,
-                color: inkMuted,
+                lineHeight: 1.65,
+                color: 'rgba(255,255,255,0.72)',
                 marginTop: 18,
                 marginBottom: 36,
-                maxWidth: 480,
+                maxWidth: 500,
                 fontWeight: 400,
               }}
             >
@@ -256,7 +286,14 @@ function Direction2({ accent = '#d4b96b', density = 'compact', palette = { base:
               <ADITBtn variant="goldFill" navy={navy} gold={gold} density={density} href="#contact">
                 Demander un briefing
               </ADITBtn>
-              <ADITBtn variant="gold" navy={navy} gold={gold} density={density} href="#lead-magnet">
+              <ADITBtn
+                variant="gold"
+                navy={'#fff'}
+                gold={gold}
+                density={density}
+                href="#lead-magnet"
+                style={{ color: '#fff' }}
+              >
                 Télécharger la note
               </ADITBtn>
             </div>
@@ -268,12 +305,62 @@ function Direction2({ accent = '#d4b96b', density = 'compact', palette = { base:
                   key={i}
                   style={{
                     width: 24, height: 4,
-                    background: i === 0 ? gold : hexToRgba(navy, 0.18),
+                    background: i === 0 ? gold : 'rgba(255,255,255,0.22)',
                   }}
                 />
               ))}
             </div>
           </div>
+
+          {/* RIGHT — supplied hero visual */}
+          <figure
+            style={{
+              position: 'relative',
+              margin: 0,
+              minHeight: compact ? 620 : 720,
+              overflow: 'hidden',
+              background: palette.deep,
+            }}
+          >
+            <img
+              src="uploads/hero.webp"
+              alt="Jonas Weko devant une carte lumineuse de l’Afrique de l’Ouest, avec références AES, UEMOA et franc CFA."
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                display: 'block',
+              }}
+            />
+            <div
+              aria-hidden
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: `linear-gradient(90deg, ${hexToRgba(navy, 0.38)} 0%, transparent 34%, transparent 72%, ${hexToRgba(navy, 0.28)} 100%)`,
+                pointerEvents: 'none',
+              }}
+            />
+            <figcaption
+              style={{
+                position: 'absolute',
+                right: 28,
+                bottom: 28,
+                padding: '12px 18px',
+                background: hexToRgba(navy, 0.78),
+                borderLeft: `2px solid ${gold}`,
+                color: '#fff',
+                fontSize: 11,
+                letterSpacing: '0.22em',
+                fontWeight: 600,
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+              }}
+            >
+              AES · UEMOA · ZONE CFA
+            </figcaption>
+          </figure>
         </div>
       </section>
 
