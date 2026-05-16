@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jonas Weko — Landing page · explorations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #efece6; font-family: 'DM Sans', system-ui, sans-serif; }
+  *, *::before, *::after { box-sizing: border-box; }
+  ::selection { background: rgba(201,168,76,0.4); color: #fff; }
+  input, select, textarea { font-family: inherit; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="map.jsx"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="direction-1.jsx"></script>
+<script type="text/babel" src="direction-2.jsx"></script>
+<script type="text/babel" src="direction-3.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "density": "compact",
+  "theme": [
+    "#0d2849",
+    "#d4b96b"
+  ]
+}/*EDITMODE-END*/;
+
+// Thèmes calibrés : [base, accent]. Vraie variété de fonds — du marine profond
+// au pétrole moyen, brique chaude, vert empire, aubergine.
+const THEMES = {
+  '#0a0f1e|#c9a84c': { base: '#0a0f1e', elev: '#0e152a', deep: '#070b16', accent: '#c9a84c' },  // Marine profond + Or
+  '#0a0f1e|#a8333d': { base: '#0a0f1e', elev: '#0e152a', deep: '#070b16', accent: '#a8333d' },  // Marine + Bordeaux
+  '#1a3556|#f0d77c': { base: '#1a3556', elev: '#1f3d62', deep: '#142a45', accent: '#f0d77c' },  // Bleu pétrole + Or clair
+  '#0d2849|#d4b96b': { base: '#0d2849', elev: '#103056', deep: '#0a1f3a', accent: '#d4b96b' },  // Marine saturé + Or doux
+  '#3a1a22|#ece4cc': { base: '#3a1a22', elev: '#42202b', deep: '#2c131a', accent: '#ece4cc' },  // Bordeaux brique + Ivoire
+  '#5c2530|#f2c894': { base: '#5c2530', elev: '#682b38', deep: '#481d26', accent: '#f2c894' },  // Brique chaude + Pêche
+  '#0f3528|#c9a84c': { base: '#0f3528', elev: '#143e30', deep: '#0a281e', accent: '#c9a84c' },  // Vert empire + Or
+  '#1f4636|#e8c876': { base: '#1f4636', elev: '#264f3e', deep: '#19382c', accent: '#e8c876' },  // Vert sauge + Or clair
+  '#1a1815|#b87333': { base: '#1a1815', elev: '#22201c', deep: '#13110f', accent: '#b87333' },  // Encre chaude + Cuivre
+  '#28163a|#d4a84e': { base: '#28163a', elev: '#301b44', deep: '#1f102e', accent: '#d4a84e' },  // Aubergine + Or rose
+};
+const THEME_OPTIONS = Object.keys(THEMES).map((k) => k.split('|'));
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const themeKey = `${t.theme[0]}|${t.theme[1]}`;
+  const theme = THEMES[themeKey] || THEMES['#0a0f1e|#c9a84c'];
+  const accent = theme.accent;
+  const density = t.density;
+  const palette = { base: theme.base, elev: theme.elev, deep: theme.deep };
+
+  return (
+    <>
+      <DesignCanvas>
+        <DCSection
+          id="directions"
+          title="Jonas Weko — Landing page"
+          subtitle="Trois directions hi-fi · consultancy moderne · grille asymétrique · #0a0f1e / or"
+        >
+          <DCArtboard
+            id="d1"
+            label="01 · Editorial Watermark"
+            width={1320}
+            height={4600}
+          >
+            <Direction1 accent={accent} density={density} palette={palette} />
+          </DCArtboard>
+          <DCArtboard
+            id="d2"
+            label="02 · Cartographic Split"
+            width={1320}
+            height={5000}
+          >
+            <Direction2 accent={accent} density={density} palette={palette} />
+          </DCArtboard>
+          <DCArtboard
+            id="d3"
+            label="03 · Institutional Brief (dossier)"
+            width={1320}
+            height={5200}
+          >
+            <Direction3 accent={accent} density={density} palette={palette} />
+          </DCArtboard>
+        </DCSection>
+      </DesignCanvas>
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="Thème — fond + accent">
+          <TweakColor
+            label="Combinaison"
+            value={t.theme}
+            onChange={(v) => setTweak('theme', v)}
+            options={THEME_OPTIONS}
+          />
+        </TweakSection>
+        <TweakSection label="Densité">
+          <TweakRadio
+            label="Cartes"
+            value={t.density}
+            onChange={(v) => setTweak('density', v)}
+            options={[
+              { label: 'Compact', value: 'compact' },
+              { label: 'Aéré', value: 'airy' },
+            ]}
+          />
+        </TweakSection>
+      </TweaksPanel>
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>
