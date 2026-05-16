@@ -1,3 +1,8 @@
+Voici le fichier **`index.html` complet**, auto-contenu, prêt à remplacer l'actuel sur le repo :
+
+***
+
+```html
 <!doctype html>
 <html lang="fr">
 <head>
@@ -8,9 +13,8 @@
   //fonts.googleapis.com">
   //fonts.gstatic.com" crossorigin>
   //fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
   <style>
-    /* ─── RESET & TOKENS ─── */
+    /* ── RESET & TOKENS ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --navy:   #0d2849;
@@ -22,318 +26,247 @@
       --panel:  #e8ebec;
       --ink:    #0d2849;
       --muted:  rgba(13,40,73,.72);
-      --subtle: rgba(13,40,73,.55);
-      --bare:   rgba(13,40,73,.28);
-      --ff-serif: 'Cormorant Garamond', Georgia, serif;
-      --ff-sans:  'DM Sans', system-ui, sans-serif;
+      --subtle: rgba(13,40,73,.52);
+      --bare:   rgba(13,40,73,.16);
+      --serif:  'Cormorant Garamond', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
     }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--ink); font-family: var(--ff-sans); font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; }
-    ::selection { background: rgba(212,185,107,.35); color: var(--navy); }
+    img { display: block; max-width: 100%; }
+    ::selection { background: rgba(212,185,107,.32); color: var(--navy); }
+    [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .75s ease, transform .75s ease; }
+    [data-reveal].is-visible { opacity: 1; transform: translateY(0); }
 
-    /* ─── UTILITIES ─── */
-    .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
-    .container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 40px; }
-    .gold { color: var(--gold); }
-    [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity .7s ease, transform .7s ease; }
-    [data-reveal].visible { opacity: 1; transform: translateY(0); }
-
-    /* ─── TOPBAR ─── */
+    /* ── TOPBAR ─────────────────────────────────────────── */
     .topbar {
       background: var(--navy);
-      color: rgba(255,255,255,.55);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      padding: 8px 0;
-      text-align: right;
+      padding: 7px 0;
     }
-    .topbar a { color: rgba(255,255,255,.55); margin-left: 20px; transition: color .2s; }
+    .topbar-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      display: flex; justify-content: flex-end; align-items: center; gap: 20px;
+    }
+    .topbar a {
+      font-size: 11px; font-weight: 500; letter-spacing: .08em;
+      text-transform: uppercase; color: rgba(255,255,255,.45);
+      transition: color .2s;
+    }
     .topbar a:hover, .topbar a.active { color: var(--gold); }
 
-    /* ─── NAV ─── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--bg);
+    /* ── NAV ─────────────────────────────────────────────── */
+    .nav-wrap {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(250,250,246,.97);
       border-bottom: 1px solid var(--bare);
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
     }
     .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
     }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .logo {
+      display: flex; align-items: center; gap: 12px;
     }
-    .logo-mark {
-      width: 36px; height: 36px;
-      border-radius: 50%;
+    .logo-ring {
+      width: 38px; height: 38px; border-radius: 50%;
       border: 1.5px solid var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .logo-mark svg { width: 22px; height: 22px; }
-    .logo-name { font-family: var(--ff-serif); font-size: 18px; font-weight: 600; letter-spacing: .03em; line-height: 1.1; }
-    .logo-name span { display: block; }
-    .nav-links { display: flex; gap: 32px; list-style: none; }
-    .nav-links a { font-size: 12.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); transition: color .2s; }
+    .logo-ring svg { width: 22px; height: 22px; }
+    .logo-name {
+      font-family: var(--serif); font-size: 17px; font-weight: 600;
+      letter-spacing: .04em; line-height: 1.1;
+    }
+    .logo-name small {
+      display: block; font-family: var(--sans); font-size: 9.5px;
+      font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--subtle); margin-top: 1px;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 28px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 12px; font-weight: 500; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--muted); transition: color .2s;
+    }
     .nav-links a:hover { color: var(--gold); }
     .nav-cta {
-      background: transparent;
-      border: 1.5px solid var(--gold);
-      color: var(--navy);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      padding: 9px 22px;
-      border-radius: 999px;
-      transition: all .2s;
-      cursor: pointer;
+      font-family: var(--sans); font-size: 12px; font-weight: 600;
+      letter-spacing: .05em; text-transform: uppercase;
+      padding: 9px 22px; border-radius: 999px;
+      border: 1.5px solid var(--gold); background: transparent;
+      color: var(--navy); cursor: pointer; transition: all .2s;
+      text-decoration: none; display: inline-block;
     }
     .nav-cta:hover { background: var(--gold); }
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .nav-burger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-burger span { display: block; width: 22px; height: 1.5px; background: var(--navy); }
 
-    /* ─── HERO ─── */
+    /* ── HERO ─────────────────────────────────────────────── */
     .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 100px 0 90px;
-      background: var(--bg);
+      position: relative; overflow: hidden;
+      padding: 96px 0 88px;
     }
-    .hero-float {
-      position: absolute;
-      width: 14px; height: 14px;
-      background: var(--gold);
-      opacity: .35;
-      pointer-events: none;
-    }
+    .hero-sq { position: absolute; pointer-events: none; }
     .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
     }
     .hero-eyebrow {
-      font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
     }
     h1 {
-      font-family: var(--ff-serif);
-      font-size: clamp(34px, 4.5vw, 52px);
-      font-weight: 500;
-      line-height: 1.15;
-      color: var(--navy);
-      margin-bottom: 24px;
+      font-family: var(--serif);
+      font-size: clamp(32px, 4.2vw, 52px);
+      font-weight: 500; line-height: 1.13;
+      color: var(--navy); margin-bottom: 22px;
     }
     h1 em { font-style: italic; color: var(--gold2); }
     .hero-sub {
-      font-size: 16px;
-      color: var(--muted);
-      line-height: 1.7;
-      max-width: 480px;
-      margin-bottom: 36px;
+      font-size: 16px; color: var(--muted); line-height: 1.72;
+      max-width: 500px; margin-bottom: 36px;
     }
-    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
     .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
+      display: inline-flex; align-items: center; gap: 8px;
       background: var(--navy); color: #fff;
-      font-size: 13px; font-weight: 600; letter-spacing: .04em;
-      padding: 14px 28px; border-radius: 999px;
-      border: 1.5px solid var(--navy);
-      transition: all .2s;
+      font-family: var(--sans); font-size: 13px; font-weight: 600;
+      letter-spacing: .04em; padding: 14px 28px;
+      border-radius: 999px; border: 1.5px solid var(--navy);
+      transition: all .2s; cursor: pointer;
     }
-    .btn-primary:hover { background: var(--navy2); }
+    .btn-primary:hover { background: var(--navy2); border-color: var(--navy2); }
     .btn-ghost {
-      display: inline-flex; align-items: center; gap: 10px;
+      display: inline-flex; align-items: center; gap: 8px;
       background: transparent; color: var(--navy);
-      font-size: 13px; font-weight: 600; letter-spacing: .04em;
-      padding: 14px 28px; border-radius: 999px;
-      border: 1.5px solid var(--gold);
-      transition: all .2s;
+      font-family: var(--sans); font-size: 13px; font-weight: 600;
+      letter-spacing: .04em; padding: 14px 28px;
+      border-radius: 999px; border: 1.5px solid var(--gold);
+      transition: all .2s; cursor: pointer;
     }
-    .btn-ghost:hover { background: var(--gold); }
+    .btn-ghost:hover { background: rgba(212,185,107,.12); }
 
-    /* ─── HERO ILLUSTRATION ─── */
+    /* ── HERO VISUAL ────────────────────────────────────── */
     .hero-visual {
-      position: relative;
-      display: flex; align-items: center; justify-content: center;
+      position: relative; display: flex; justify-content: center;
+    }
+    .africa-frame {
+      position: relative; width: 100%; max-width: 480px;
+    }
+    .africa-frame::before {
+      content: '';
+      position: absolute; top: -10px; left: -10px; right: 10px; bottom: 10px;
+      border: 1.5px solid var(--gold); border-radius: 3px; z-index: 0;
     }
     .africa-scene {
-      width: 100%; max-width: 480px;
-      aspect-ratio: 4/3;
-      position: relative;
-      overflow: hidden;
-      border-radius: 4px;
+      position: relative; z-index: 1;
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--navy);
+      border-radius: 3px; overflow: hidden;
     }
     .africa-scene svg { width: 100%; height: 100%; }
+    .hero-img-loaded .africa-scene svg { display: none; }
+    .africa-scene img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      display: none;
+    }
+    .hero-img-loaded .africa-scene img { display: block; }
 
-    /* ─── AFFILIATIONS STRIP ─── */
+    /* ── AFFILIATIONS ───────────────────────────────────── */
     .affiliations {
       background: var(--panel);
       border-top: 1px solid var(--bare);
       border-bottom: 1px solid var(--bare);
-      padding: 20px 0;
+      padding: 18px 0;
     }
     .aff-inner {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      flex-wrap: wrap;
+      max-width: 1160px; margin: 0 auto; padding: 0 40px;
+      display: flex; align-items: center; gap: 36px; flex-wrap: wrap;
     }
     .aff-label {
-      font-size: 10px; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; color: var(--subtle);
-      white-space: nowrap;
+      font-size: 10px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--subtle); white-space: nowrap;
     }
-    .aff-badges {
-      display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
-    }
+    .aff-badges { display: flex; gap: 10px; flex-wrap: wrap; }
     .aff-badge {
-      font-size: 12px; font-weight: 600; letter-spacing: .06em;
+      font-size: 11.5px; font-weight: 600; letter-spacing: .06em;
       text-transform: uppercase; color: var(--muted);
       padding: 5px 14px;
-      border: 1px solid var(--bare);
-      border-radius: 2px;
+      border: 1px solid var(--bare); border-radius: 2px;
+      background: var(--bg);
     }
 
-    /* ─── SECTION HEADER ─── */
-    .section-kicker {
+    /* ── SECTION COMMONS ────────────────────────────────── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 40px; }
+    .sec-kicker {
       font-size: 10.5px; font-weight: 700; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 12px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
     }
     h2 {
-      font-family: var(--ff-serif);
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 500;
-      line-height: 1.2;
-      color: var(--navy);
-      margin-bottom: 16px;
+      font-family: var(--serif);
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: 500; line-height: 1.2;
+      color: var(--navy); margin-bottom: 14px;
     }
-    .section-intro {
-      font-size: 15px; color: var(--muted); line-height: 1.7;
-      max-width: 560px;
+    .sec-intro {
+      font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 560px;
     }
 
-    /* ─── § I CONSTAT ─── */
-    .constat {
-      padding: 0;
-    }
+    /* ── § I · CONSTAT ──────────────────────────────────── */
     .constat-banner {
-      background: var(--navy);
-      padding: 60px 0 50px;
+      background: var(--navy); padding: 72px 0 0;
     }
-    .constat-banner .section-kicker { color: rgba(255,255,255,.4); }
-    .constat-banner h2 { color: #fff; margin-bottom: 40px; }
+    .constat-banner .sec-kicker { color: rgba(255,255,255,.35); }
+    .constat-banner h2 { color: #fff; margin-bottom: 48px; }
     .constat-blocks {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(255,255,255,.1);
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgba(255,255,255,.1);
     }
     .constat-block {
-      background: var(--navy);
-      padding: 36px 32px 32px;
-      position: relative;
+      padding: 36px 32px 36px;
+      border-right: 1px solid rgba(255,255,255,.08);
     }
-    .constat-block::before {
-      content: attr(data-num);
-      display: block;
-      font-family: var(--ff-serif);
-      font-size: 48px;
-      font-weight: 400;
-      color: rgba(212,185,107,.2);
-      line-height: 1;
-      margin-bottom: 16px;
+    .constat-block:last-child { border-right: none; }
+    .cb-num {
+      font-family: var(--serif); font-size: 52px; font-weight: 400;
+      color: rgba(212,185,107,.2); line-height: 1; margin-bottom: 16px;
     }
     .constat-block p {
-      font-size: 14.5px;
-      color: rgba(255,255,255,.72);
-      line-height: 1.7;
+      font-size: 14.5px; color: rgba(255,255,255,.68); line-height: 1.72;
     }
 
-    /* ─── § II EXPERTISE ─── */
-    .expertise { padding: 90px 0; }
-    .expertise-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: start;
+    /* ── § II · EXPERTISE ───────────────────────────────── */
+    .expertise { padding: 88px 0; }
+    .expertise-grid {
+      display: grid; grid-template-columns: 420px 1fr; gap: 64px; align-items: start;
     }
-    .portrait-wrap {
-      position: relative;
+    .portrait-wrap { position: relative; }
+    .portrait-offset {
+      position: absolute; top: -12px; left: -12px; right: 12px; bottom: 12px;
+      border: 1.5px solid var(--gold); border-radius: 3px; z-index: 0; pointer-events: none;
     }
-    .portrait-frame {
-      position: absolute;
-      top: -12px; left: -12px;
-      right: 12px; bottom: 12px;
-      border: 1.5px solid var(--gold);
-      border-radius: 3px;
-      pointer-events: none;
-      z-index: 0;
+    .portrait-box {
+      position: relative; z-index: 1;
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--navy2); border-radius: 3px; overflow: hidden;
     }
-    .portrait-img {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: var(--navy2);
-      border-radius: 3px;
-      overflow: hidden;
-      display: flex; align-items: flex-end;
-    }
-    .portrait-img img {
+    .portrait-box img {
       width: 100%; height: 100%; object-fit: cover; object-position: top center;
     }
-    .portrait-img .portrait-placeholder {
+    .portrait-box .portrait-placeholder {
       width: 100%; height: 100%;
       background: linear-gradient(160deg, var(--navy2) 0%, var(--deep) 100%);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 12px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
     }
-    .portrait-img .portrait-placeholder svg {
-      width: 72px; height: 72px; opacity: .3;
-    }
+    .portrait-placeholder svg { width: 80px; height: 80px; opacity: .18; }
     .portrait-caption {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      z-index: 2;
-      background: var(--navy);
-      padding: 14px 18px;
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+      background: var(--navy); padding: 14px 20px;
     }
-    .portrait-caption .pc-name {
-      font-family: var(--ff-serif);
-      font-size: 16px; font-weight: 600;
-      color: #fff; line-height: 1.1;
-    }
-    .portrait-caption .pc-title {
-      font-size: 10px; font-weight: 700; letter-spacing: .09em;
-      text-transform: uppercase; color: var(--gold);
-      margin-top: 3px;
-    }
-
-    .expertise-content { padding-top: 8px; }
-    .expertise-content h2 { margin-bottom: 24px; }
-    .cred-list { list-style: none; margin: 0 0 28px; }
-    .cred-list li {
-      font-size: 14px; color: var(--muted); line-height: 1.6;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--bare);
-      display: flex; align-items: baseline; gap: 10px;
-    }
-    .cred-list li::before {
-      content: '—';
-      color: var(--gold);
-      flex-shrink: 0;
-    }
-    .thesis-block {
-      background: var(--panel);
-      border-left: 3px solid
+    .pc-name { font-family: var(--serif); font-size: 17px; font
