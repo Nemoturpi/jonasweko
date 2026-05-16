@@ -177,136 +177,135 @@ function Direction2({ accent = '#d4b96b', density = 'compact', palette = { base:
 
       {/* ────────── HERO ────────── */}
       <section
+        id="hero"
         style={{
           position: 'relative',
-          padding: `${py}px ${px}px`,
-          paddingBottom: compact ? 100 : 140,
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
           overflow: 'hidden',
+          padding: `80px ${px}px`,
+          background: palette.deep,
         }}
       >
-        {/* Floating decorative squares — ADIT signature */}
-        <FloatSquare color={gold} size={14} top={60} left={px + 100} />
-        <FloatSquare color={gold} size={10} bottom={120} left={140} />
-        <FloatSquare color={navy} size={12} top={180} right={px + 60} />
-        <FloatSquare color={gold} size={16} bottom={80} right={px + 200} />
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
+          }}
+        >
+          <img
+            src="uploads/hero.webp"
+            alt=""
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center top',
+              opacity: 0.75,
+              display: 'block',
+            }}
+          />
+        </div>
+        <div
+          aria-hidden
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 1,
+            background: 'linear-gradient(105deg, rgba(8,12,24,0.92) 0%, rgba(8,12,24,0.7) 45%, rgba(8,12,24,0.2) 100%)',
+            pointerEvents: 'none',
+          }}
+        />
 
-        {/* Diagonal dashed connectors */}
-        <svg aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', width: '100%', height: '100%' }}>
-          <line x1="0" y1="20%" x2="20%" y2="35%" stroke={hexToRgba(navy, 0.25)} strokeWidth="0.6" strokeDasharray="2 5" />
-          <line x1="100%" y1="65%" x2="80%" y2="85%" stroke={hexToRgba(navy, 0.25)} strokeWidth="0.6" strokeDasharray="2 5" />
-        </svg>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 60, alignItems: 'center', position: 'relative' }}>
-          {/* LEFT — supplied hero visual */}
-          <div data-reveal style={{ position: 'relative' }}>
-            <div
+        <div
+          data-reveal
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            maxWidth: 680,
+          }}
+        >
+          <span
+            style={{
+              display: 'inline-block',
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 11.5,
+              fontWeight: 500,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              color: gold,
+              marginBottom: 24,
+              paddingBottom: 10,
+              borderBottom: `1px solid ${hexToRgba('#ffffff', 0.16)}`,
+            }}
+          >
+            Analyse indépendante · Afrique de l'Ouest
+          </span>
+          <h1
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)',
+              fontWeight: 300,
+              lineHeight: 1.18,
+              letterSpacing: '-0.01em',
+              color: '#fff',
+              margin: '0 0 28px',
+              textWrap: 'balance',
+            }}
+          >
+            Comprendre les systèmes monétaires et politiques d'Afrique de l'Ouest —{' '}
+            <em style={{ color: '#ead68f', fontStyle: 'italic' }}>pour décider.</em>
+          </h1>
+          <p
+            style={{
+              fontSize: 16.5,
+              fontWeight: 300,
+              color: 'rgba(255,255,255,0.72)',
+              lineHeight: 1.75,
+              margin: '0 0 48px',
+              maxWidth: 520,
+            }}
+          >
+            Analyse indépendante pour investisseurs, banques et institutions exposées à la zone franc, à l'Eco et aux dynamiques de l'AES.
+          </p>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            <a
+              href="#contact"
               style={{
-                position: 'absolute',
-                left: -18,
-                top: 18,
-                width: '100%',
-                height: '100%',
-                border: `1.5px solid ${gold}`,
-                pointerEvents: 'none',
-              }}
-            />
-            <figure
-              style={{
-                position: 'relative',
-                margin: 0,
-                width: '100%',
-                maxWidth: 720,
-                aspectRatio: '16/9',
-                background: palette.deep,
-                overflow: 'hidden',
-                boxShadow: `0 28px 70px ${hexToRgba(navy, 0.18)}`,
-              }}
-            >
-              <img
-                src="uploads/hero.webp"
-                alt="Jonas Weko devant une carte lumineuse de l’Afrique de l’Ouest, avec références AES, UEMOA et franc CFA."
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                  display: 'block',
-                }}
-              />
-            </figure>
-            <FloatSquare color={navy} size={9} bottom={-8} left={40} />
-            <FloatSquare color={gold} size={9} top={-12} right={120} />
-          </div>
-
-          {/* RIGHT — H1 + sub */}
-          <div data-reveal>
-            <h1
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: compact ? 64 : 84,
-                fontWeight: 600,
-                lineHeight: 0.98,
-                letterSpacing: '0.005em',
-                margin: 0,
-                color: gold,
-                textTransform: 'uppercase',
-                textWrap: 'balance',
-              }}
-            >
-              Décrypter
-              <br />
-              l’Afrique
-              <br />
-              de l’Ouest
-            </h1>
-            <p
-              style={{
+                display: 'inline-block',
+                padding: '14px 36px',
+                background: gold,
+                color: palette.deep,
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: compact ? 17 : 19,
-                lineHeight: 1.5,
-                color: navy,
+                fontSize: 13,
                 fontWeight: 500,
-                marginTop: 32,
-                marginBottom: 0,
-                maxWidth: 480,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
               }}
             >
-              Comprendre les systèmes <K color={gold}>monétaires</K> et <K color={gold}>politiques</K> d’Afrique de l’Ouest — pour décider.
-            </p>
-            <p
+              Demander un briefing
+            </a>
+            <a
+              href="#lead-magnet"
               style={{
-                fontSize: 14.5,
-                lineHeight: 1.6,
-                color: inkMuted,
-                marginTop: 18,
-                marginBottom: 36,
-                maxWidth: 480,
+                display: 'inline-block',
+                padding: '14px 36px',
+                border: '1px solid rgba(255,255,255,0.25)',
+                color: '#fff',
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
                 fontWeight: 400,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
               }}
             >
-              {C.hero.sub}
-            </p>
-            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-              <ADITBtn variant="goldFill" navy={navy} gold={gold} density={density} href="#contact">
-                Demander un briefing
-              </ADITBtn>
-              <ADITBtn variant="gold" navy={navy} gold={gold} density={density} href="#lead-magnet">
-                Télécharger la note
-              </ADITBtn>
-            </div>
-
-            {/* Pagination dots — ADIT carousel feel */}
-            <div style={{ marginTop: 48, display: 'flex', gap: 10 }}>
-              {[0, 1, 2, 3].map((i) => (
-                <span
-                  key={i}
-                  style={{
-                    width: 24, height: 4,
-                    background: i === 0 ? gold : hexToRgba(navy, 0.18),
-                  }}
-                />
-              ))}
-            </div>
+              Télécharger la note
+            </a>
           </div>
         </div>
       </section>
