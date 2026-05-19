@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  background: #0a0f1e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(201, 168, 76, 0.12), transparent 28rem),
+    radial-gradient(circle at 80% 20%, rgba(78, 102, 145, 0.14), transparent 30rem),
+    #0a0f1e;
+  color: #e8edf6;
+}
+
+::selection {
+  background: rgba(201, 168, 76, 0.35);
+}
+
+.fade-section {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.fade-section.is-visible {
+  animation: fade-in 700ms ease-out both;
+}
